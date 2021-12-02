@@ -7,11 +7,12 @@ data <- read.csv('02/day-2-input.csv',header=FALSE)
 data <- transpose(strsplit(data$V1," "))
 data <- as.data.frame(do.call(cbind, data))
 data$V2 <- as.numeric(data$V2)
+colnames(data) <- c("direction", "X")
 
 #Counting different directions
-forward <- sum(select(filter(data, V1 == 'forward'),'V2'))
-down <- sum(select(filter(data, V1 == 'down'),'V2'))
-up <- sum(select(filter(data, V1 == 'up'),'V2'))
+forward <- sum(select(filter(data, direction == 'forward'),'X'))
+down <- sum(select(filter(data, direction == 'down'),'X'))
+up <- sum(select(filter(data, direction == 'up'),'X'))
 
 #by question definition of depth
 depth <- down - up
@@ -30,11 +31,11 @@ horizontal <- 0
 depth <- 0
 
 for(i in 1:nrow(data)){
-  if(data[i,'V1'] == 'down'){aim <- aim + data[i,'V2']}
-  if(data[i,'V1'] == 'up'){aim <- aim - data[i,'V2']}
-  if(data[i,'V1'] == 'forward'){
-                                horizontal <- horizontal + data[i,'V2']
-                                depth <- depth + aim*data[i,'V2']
+  if(data[i,'direction'] == 'down'){aim <- aim + data[i,'X']}
+  if(data[i,'direction'] == 'up'){aim <- aim - data[i,'X']}
+  if(data[i,'direction'] == 'forward'){
+                                horizontal <- horizontal + data[i,'X']
+                                depth <- depth + aim*data[i,'X']
   }
 }
 
