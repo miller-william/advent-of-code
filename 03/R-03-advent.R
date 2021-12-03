@@ -12,7 +12,7 @@ for(i in 1:12){
   data[,i+1] <- substr(data[,'full'],i,i)
   #name new columns
   names(data)[names(data) == paste0("V",i+1)] <- paste0("pos_",i)
-  #check which is most common in each position and add 1 or 0 to gamme and epsilon strings as appropriate
+  #check which is most common in each position and add 1 or 0 to gamma and epsilon strings as appropriate
   if(sum(as.numeric(data[,i+1]))/nrow(data) >= 0.5){
          gamma <- paste(gamma,"1",sep = "")
          epsilon <- paste(epsilon,"0",sep = "")}
@@ -33,9 +33,8 @@ for(i in 1:12){
   col <- paste0('pos_',i)
   #filter to only rows with most common value
   if(sum(as.numeric(data2[,col]))/nrow(data2) >= 0.5){
-    #!! injection operator used to pass col string as object which can be used in filter
-   data2 <- filter(data2,!!as.symbol(col)==1)}
-  else{data2 <- filter(data2,!!as.symbol(col)==0)}
+   data2 <- filter(data2, get(col)==1)}
+  else{data2 <- filter(data2, get(col)==0)}
   #stop process when we only have 
   if (nrow(data2)==1) {break}
   }
@@ -48,8 +47,8 @@ data3 <- data
 for(i in 1:12){
   col <- paste0('pos_',i)
   if(sum(as.numeric(data3[,col]))/nrow(data3) >= 0.5){
-    data3 <- filter(data3,!!as.symbol(col)==0)}
-  else{data3 <- filter(data3,!!as.symbol(col)==1)}
+    data3 <- filter(data3,get(col)==0)}
+  else{data3 <- filter(data3,get(col)==1)}
   if (nrow(data3)==1) {break}
 }
 
