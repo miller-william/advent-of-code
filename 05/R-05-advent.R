@@ -13,35 +13,11 @@ data[] <- lapply(data, function(x) as.numeric(x))
 #for two sets of x,y co-ords, output integer points on line between - this could be simplified
 draw_line <- function(x1,x2,y1,y2){
   #calculate gradient for us in cases which are not x1=x2 or y1=y2
-  grad <- ifelse(is.infinite((y2-y1)/(x2-x1))|is.na((y2-y1)/(x2-x1)),0,(y2-y1)/(x2-x1))
-  x <- NULL
-  y <- NULL
-  #direction of x and y
-  sx <- sign(x2-x1)
-  sy <- sign(y2-y1)
-  #calculate x-coords
-  x <- x1
-  #Case where x is unchanged
-  if(sx==0){x = array(x2,dim = 1+abs(y2-y1))}
-  #if x changes, create an array which goes from x1 to x2
-  else{ 
-    for(i in 1:(abs(x2-x1))){
-      x=c(x,tail(x, n=1)+(1*sx))
-    }
-  }
-  #calculate y-coords
-  y=y1
-  for(i in 1:(length(x)-1)){
-    #Case where y is unchanged
-    if(y2==y1){y = array(y2,dim = abs(x2-x1))}
-    #Case where x is unchanged
-    else{if(sx==0){y <- c(y, tail(y, n=1) + 1*sy)}
-    #case where both x and y change
-    else{ y <- c(y, tail(y, n=1) + grad*sx)}}
-  }
-  #Output list of coords
-  coords <- cbind(x,y)
-return(coords)
+    x=seq(x1,x2, length.out = 1 + max(abs(y2-y1),abs(x2-x1)))
+    y=seq(y1,y2, length.out = 1 + max(abs(y2-y1),abs(x2-x1)))
+    #Output list of coords
+    coords <- cbind(x,y)
+    return(coords)
 }
 
 #increment array values by 1 of coords provided
@@ -79,5 +55,3 @@ calculate_answer(data_p1)
 #Now apply to all data
 #Answer 2
 calculate_answer(data)
-
- 
