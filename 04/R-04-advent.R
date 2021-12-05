@@ -12,14 +12,8 @@ data <- (strsplit(data, " "))
 data <- lapply(data, function(z){ z[!is.na(z) & z != ""]})
 data <- t(as.data.frame(data))
 rownames(data) <- NULL
-data <- as.data.frame(data)
-
-#I don't understand why this is needed. But something weird happening with the data as a list before
-bingo <- as.data.frame(cbind(as.numeric(data$V1),
-               as.numeric(data$V2),
-               as.numeric(data$V3),
-               as.numeric(data$V4),
-               as.numeric(data$V5)))
+bingo <- as.data.frame(data)
+bingo[] <- lapply(bingo, function(x) as.numeric(x))
 
 group <- 1 
 count <- 1
