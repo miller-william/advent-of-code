@@ -31,6 +31,7 @@ pop_array <- function(map, coords){
 #Final function initialises an array of 0s.
 #Then loop through each row in data, calculate co-ords for that row, then updates the array.
 #returns number of cells where value is >1 - our overlaps.
+#Also create an visual representation of the maxtrix
 
 calculate_answer <- function(data){
   #Initialise array of 0s 
@@ -41,6 +42,7 @@ calculate_answer <- function(data){
     map <- pop_array(map,coords)
   }
   answer <- length(map[map>1])
+  image(map)
   return(answer)
 }
 
