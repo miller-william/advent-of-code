@@ -5,15 +5,14 @@ data <- read.csv('06/day-06-input.csv',header=FALSE)
 data <- data.frame(do.call('rbind', strsplit(as.character(data$V1),',')))
 data <- t(data)
 colnames(data) <- "x"
-#data <- as.data.frame(data)
-#data[] <- lapply(data, function(x) as.integer(x))
 data<- as.integer(data)
+data_master <- data
+
+#Part 1
 #Rules
 #Count number of 0
 #Decrease every number by 1 except 0 -> 6
 # Add new rows of 8 for each 0
-data_master <- data
-
 update_num <- function(x){
   if(x == 0){x <- 6}
   else{x <- x-1}
@@ -39,7 +38,7 @@ for(day in 1:80){
 print(length(data))
 
 #Part 2
-
+data <- data_master
 new_fish <- c(sum(data == 0),
         sum(data == 1),
         sum(data == 2),
@@ -73,6 +72,7 @@ for(day in 1:256){
 
 #Part 2 Answer
 answer2 <- sum(fish) + sum(new_fish)
+options(scipen = 100, digits = 4)
 print(sum(fish) + sum(new_fish))
   
 #### Just for 'fun' ########
