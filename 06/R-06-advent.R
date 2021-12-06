@@ -77,6 +77,7 @@ print(sum(fish) + sum(new_fish))
   
 #### Just for 'fun' ########
 #build exponential model to fit data
+#Taken from here - https://rpubs.com/mengxu/exponential-model
 
 model_data <- cbind(1:80,model_data)
 colnames(model_data) <- c("day","fish")
