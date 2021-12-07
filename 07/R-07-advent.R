@@ -67,21 +67,3 @@ for (p in 1:length(data)){
 
 #Answer 2
 print(lowest_fuel)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
