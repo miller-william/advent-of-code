@@ -24,6 +24,7 @@ test <- NULL
 count <- NULL
 model_data <- array()
 
+
 for(day in 1:80){
   print(day)
   new <- sum(data==0)
@@ -51,6 +52,7 @@ new_fish <- c(sum(data == 0),
 
 fish <- (seq(0,0, length.out = 7))
 count <- as.data.frame(count)
+model_data_full <- array()
 
 for(day in 1:256){
   
@@ -68,6 +70,7 @@ for(day in 1:256){
   fish[7] <- new + old
   new_fish[9] <- new + old
   count[day,2] <- (fish[1] + new_fish[1])
+  model_data_full[day] <- sum(fish) + sum(new_fish)
 }
 
 #Part 2 Answer
@@ -99,6 +102,13 @@ model <- nls(fish ~ alpha * exp(beta * day) + theta , data = model_data, start =
 # Plot fitted curve
 plot(model_data$day, model_data$fish)
 lines(model_data$day, predict(model, list(day = model_data$day)), col = 'skyblue', lwd = 3)
+
+#plot model on full data
+model_data_full <- cbind(1:256,model_data_full)
+colnames(model_data_full) <- c("day","fish")
+model_data_full <- as.data.frame(model_data_full)
+plot(model_data_full$day, model_data_full$fish)
+lines(model_data_full$day, predict(model, list(day = model_data_full$day)), col = 'skyblue', lwd = 3)
 
 options(scipen = 100, digits = 4)
 predicted_answer <- predict(model, list(day=256))
