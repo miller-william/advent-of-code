@@ -44,24 +44,32 @@ print(count)
 # 5 -> has 5 characters all of which in 6
 # 2 -> everything else
 
-test_string_contained <- function(test1,test2){
+#Checks whether any of the strings in a vector of strings: string1 are wholly contained in a second string: string 2 (in any order)
+# Returns a vector of logicals for whether the string in that position is wholly contained
+test_string_contained <- function(string1,string2){
   test <- TRUE
-  for(i in 1:nchar(test1)){
-    new_test <- grepl(substr(test1,i,i),test2)
+  #checks each character in the string individually (surely a better way to do this)
+  for(i in 1:nchar(string1)){
+    new_test <- grepl(substr(string1,i,i),string2)
     test <- test & new_test
   }
   return(test)
 }
+
+#Set up array for answers
 
 answer_index <- array(dim = c(nrow(patterns), ncol(patterns)))
 
 for(row in 1:nrow(patterns)){
 
 #Easy answers first
+#column i of answer_index gives the column position in the pattern array of integer i. except 10 is 0
 answer_index[row,1] <- which(nchar(t(patterns[row,]))==2)
 answer_index[row,4] <- which(nchar(t(patterns[row,]))==4)
 answer_index[row,7] <- which(nchar(t(patterns[row,]))==3)
 answer_index[row,8] <- which(nchar(t(patterns[row,]))==7)
+
+#This could all be streamlined. 
 
 #test for 6 
 patterns_with_6_char <- (t(patterns[row,])[which(nchar(t(patterns[row,])) == 6)])
@@ -107,6 +115,7 @@ answer_index[row,10] <- which(t(patterns[row,])==pattern_for_no_0)
 
 #need to test whether the strings are same length AND contain all the same characters
 
+#Same as function above but also checks whether they are same length
 test_string_exact <- function(test1,test2){
   test <- TRUE
   for(i in 1:nchar(test1)){
@@ -120,6 +129,7 @@ test_string_exact <- function(test1,test2){
 #set up array to capture row numbers
 sum <- array(dim = nrow(outputs))
 
+#Loop through each position in outputs and find equivalent number
 for(rows in 1:nrow(outputs)){
   comb_num <- ""
   for(cols in 1:ncol(outputs)){
