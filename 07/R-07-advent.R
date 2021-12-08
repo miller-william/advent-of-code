@@ -17,24 +17,14 @@ fuel_cost <- function(data,p){
   return(fuel)
 }
 
-fuel <- 0
-lowest_fuel <- 100000000000 
+#Median is best position 
+best_pos <- median(data)
 
-#Loop through possible positions 
-for (p in 1:length(data)){
+#calculate fuel cost at that position
+ans1 <- fuel_cost(data,best_pos)
   
-  #calculate fuel cost at that position
-  fuel <- fuel_cost(data,p)
-  
-  #store the lowest one for all positions
-  if (fuel <= lowest_fuel){lowest_fuel <- fuel; best_pos <- p}
-  print(p)
-  print(fuel)
-  fuel <- 0
-
-}
 #Answer 1
-print(lowest_fuel)
+print(ans1)
 
 #Part 2
 #Update fuel cost function for part 2
