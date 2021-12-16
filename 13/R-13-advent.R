@@ -55,4 +55,5 @@ for(i in 1:nrow(instructions)){
 #Because y increases top to bottom
 data_p2$y <- - data_p2$y
 
-plot(data_p2, pch=19, xlim=c(0,40), ylim=c(-30,0))
+#Answer 2
+plot(data_p2, pch=19, xlim=c(0,40), ylim=c(-40,0))
