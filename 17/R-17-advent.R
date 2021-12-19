@@ -1,5 +1,3 @@
-
-
 #Example
 #target area: x=20..30, y=-10..-5
 
@@ -15,7 +13,7 @@ ymin <- -100
 xmax <- 178
 xmin <- 144
 
-#Function takes a starting velocity and iterates 100 steps. Outputs starting velocity, whether it hit zone, and max_height reached
+#Function takes a starting velocity and iterates steps_n number of steps. Outputs starting velocity, whether it hit zone, and max_height reached (for part 1)
 
 launch <- function(xv,yv, steps_n=100, p2=FALSE){
     
@@ -30,9 +28,11 @@ launch <- function(xv,yv, steps_n=100, p2=FALSE){
   
   #movement
   for(steps in 1:steps_n){
+        #move it
         x <- x + xv
         y <- y + yv
         
+        #in case we'd like to plot the trajectory
         plot_x <- c(plot_x,x)
         plot_y <- c(plot_y,y)
         
@@ -43,18 +43,21 @@ launch <- function(xv,yv, steps_n=100, p2=FALSE){
         #print(x)
         #print(y)
         
-        #check position
+        #check position. No point continuing steps if it's...
+        #in the zone
         if(x <= xmax & x >= xmin & y <= ymax & y >= ymin){z <- 1; 
         #print("in zone!");
         print(max_height); break;}
-        #check if past or below the point
+        #past the special box
         if(x > xmax){
           #print(paste0("Past the zone: x=",x));
           break}
+        #or below the box and not rising
         if(y < ymin & yv < 0){
           #print("Below the zone and dropping"); 
           break;}
         
+        #adjust velocity as per question definition
         if(xv > 0){xv <- xv - 1}
         if(xv < 0){xv <- xv + 1}
         yv <- yv - 1 
@@ -62,6 +65,7 @@ launch <- function(xv,yv, steps_n=100, p2=FALSE){
   
   }
   
+  #if we're doing p2, we just output one number. Could simplify this
   if(p2==FALSE){
     output$xv <- start_xv
     output$yv <- start_yv
@@ -78,13 +82,15 @@ launch <- function(xv,yv, steps_n=100, p2=FALSE){
 }
 
 
-#Loop through launch function to find answers to part 1 and 2
+#Loop through launch function to find answers to part 1 and 2. This is all about how we choose our velocities to try
 
 #part 1
 output <- list()
 ans1 <- 0
 
-for(i in 1:100){
+#for part 1, need a range that is likely to get high, so no point having x too large 
+
+for(i in 1:50){
   for(j in 1:200){
     #print(paste0("xv: ",i," - ","yv: ",j))
     output <- launch(i,j,10000, p2=FALSE)
